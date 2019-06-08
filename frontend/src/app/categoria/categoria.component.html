@@ -1,0 +1,120 @@
+<nav class="navbar">
+    <span class="navbar-toggle" id="js-navbar-toggle">
+        <i class="fas fa-bars"></i>
+    </span>
+    <a class="logo"><button type="button" *ngIf="!logeado" class="btn btn-primary"
+            [routerLink]="['/login']">Login</button>
+        <button type="button" *ngIf="!logeado" class="btn btn-secondary"
+            [routerLink]="['/registro']">Registrarse</button>
+        <button type="button" *ngIf="logeado" class="btn btn-danger" (click)="cerrarSesion()">Desconectar</button></a>
+    <ul class="main-nav" id="js-menu">
+        <li *ngFor="let c of categorias">
+            <a routerLink="/{{c.Nombre}}" class="nav-links">{{c.Nombre}}</a>
+        </li>
+    </ul>
+</nav>
+
+
+<div class="container-div">
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="list-group">
+                <li *ngFor="let p of posts" class="list-group-item">
+                    <p class="info-post">{{p.Texto}}</p>
+                    <p class="info-post">Publicado por {{p.NombreUsuario}} el {{p.Fecha}} en {{p.NomCategoria}}</p>
+
+                    <button class="buto-receptes" type="button" (click)="mostrarComentarios(p)">Ver comentarios</button>
+                    <button class="buto-receptes" *ngIf="logeado" type="button" (click)="mostrarAddComentario(p)">Añadir
+                        comentario</button>
+                    <div *ngIf="p.verComentarios">
+                        <div class="comentarios-titulo">
+                            <span>Comentarios</span>
+                        </div>
+                        <div *ngFor="let c of comentarios" class="comentarios">
+                            <div *ngIf="c.IdPost==p.PostId" class="publicado-por">
+                                <p class="info"><strong>Comentario realizado por {{c.UsuarioNombre}}</strong></p>
+                                <p class="comentario">{{c.Texto}}</p>
+                                <br>
+                                <p class="fecha">El {{c.Fecha}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div *ngIf="p.verAddComentario">
+                        <div class="comentarios-titulo">
+                            <span>Deja tu comentario</span>
+                        </div>
+                        <form novalidate (ngSubmit)="addComment(p)" [formGroup]="comentform">
+                            <div class="card card-body" style="margin-top: 20px">
+                                <div class="margin-top-10">
+                                    <textarea name="texto" class="form-control" rows="3" id="comment"
+                                        formControlName="Texto" required></textarea>
+                                </div>
+                                <div class="alert alert-danger error"
+                                    *ngIf="comentform.get('Texto').hasError('required') && comentform.get('Texto').touched">
+                                    Introduce un comentario
+                                </div>
+                                <div class="margin-top-10">
+                                    <button type="submit" class="btn btn-receptes"
+                                        [disabled]="comentform.invalid">Enviar comentario</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <form novalidate (ngSubmit)="publicar()" [formGroup]="postform">
+                <div class="form">
+                    <div class="control">
+                        <label class="radio">
+                            <input type="radio" name="Sexo" formControlName="Sexo" value="Hombre" checked>
+                            Hombre
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="Sexo" formControlName="Sexo" value="Mujer">
+                            Mujer
+                        </label>
+                    </div>
+                    <div>
+                        <div>
+                            <input *ngIf="logeado" type="text" name="nombre" class="form-control" placeholder="Nombre"
+                                minlength="5" value="{{nombreLogeado}}" disabled required>
+                            <input *ngIf="!logeado" type="text" name="nombre" class="form-control" placeholder="Nombre"
+                                minlength="5" formControlName="NomUsuario" required>
+                        </div>
+
+                        <div *ngIf="!logeado">
+                            <div class="alert alert-danger error"
+                                *ngIf="postform.get('NomUsuario').hasError('required') && postform.get('NomUsuario').touched">
+                                Nombre requerido
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <textarea name="texto" class="form-control text-descripcio" rows="5" placeholder="Texto"
+                            formControlName="Texto" required></textarea>
+                    </div>
+                    <div class="alert alert-danger error"
+                        *ngIf="postform.get('Texto').hasError('required') && postform.get('Texto').touched">
+                        Texto requerido
+                    </div>
+                    <div>
+                        <select class="form-control" formControlName="IdCategoria">
+                            <option *ngFor="let c of categorias" [value]="c.CategoriaId">{{c.Nombre}}</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-receptes"
+                        [disabled]="postform.invalid">Publicar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>

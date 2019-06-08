@@ -1,0 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+html, body { 
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    background-color: white;
+}
+.text-descripcio {
+    resize: none;
+}
+.container-div {
+    height: 100%;
+}
+.btn-receptes {
+    background-color: #939393;
+    border-color: #939393;
+    color: white;
+}
+.btn-receptes {
+    background-color: #F40;
+    border-color: #777777;
+}
+.form > div {
+    margin: 5px 0;
+}
+.nostyle-ul{
+    list-style-type: none;
+}
+.collapse-afegirComentari {
+    margin-top: 5px;
+}
+.collapse-afegirComentari .card-body{
+    background-color:whitesmoke;
+}
+.margin-top-10 {
+    margin-top: 10px;
+}
+.text-comentari {
+    resize: vertical;
+}
+.navbar {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #3f51b5;
+}
+.select-nav {
+    -moz-appearance: none; 
+}
+.error {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+.buto-receptes {
+    border: none;
+    border-radius: .25rem;
+    background-color: #ddd;
+    padding: 7px;
+    margin: 0 2.5px;
+    color: #484848;
+}
+.buto-receptes:hover {
+    cursor: pointer;
+}
+.edicio {
+    margin: 10px 0;
+}
+.edicio > div {
+    margin: 5px 0;
+}
+
